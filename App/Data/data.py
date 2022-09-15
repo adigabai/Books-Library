@@ -1,8 +1,8 @@
 
 import sqlite3
 
-
-books_DB_path = r'App\Data\Books_DB.db'
+books_DB_path = r'App/Data/Books_DB.db'
+# books_DB_path = r'App\Data\Books_DB.db'
 
 def get_data_from_db():
     # Connect
