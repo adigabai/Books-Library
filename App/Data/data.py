@@ -2,7 +2,7 @@
 import sqlite3
 
 
-books_DB_path = r'C:\Users\Amit Hauzer\Desktop\VS_Projects\John Bryce\SQL\Flask_with_db\Books Library\Data\Books_DB.db'
+books_DB_path = r'.\Books_DB.db'
 
 def get_data_from_db():
     # Connect
