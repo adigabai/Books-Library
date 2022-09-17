@@ -63,6 +63,21 @@ def search_by_book_name(book_name):
     return results
 
 
+def del_book(rowid):
+    
+    print("book DELETED")
+    
+    # Connect
+    con = sqlite3.connect(books_DB_path)
+    cur = con.cursor()
+     
+    # delete a book
+    cur.execute(f'DELETE from Books WHERE rowid={rowid}')
+    con.commit()
+
+    # close
+    con.close()
+
 
 
 
