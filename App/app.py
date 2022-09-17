@@ -1,10 +1,12 @@
 
 from flask import Flask, render_template, request, redirect
 from App.Data.data import get_data_from_db, get_row, add_book_to_data, search_by_book_name
+from App.app_admin import bp
 
 
 
 app = Flask(__name__)
+app.register_blueprint(bp)
 
 
 @app.route("/")
@@ -21,19 +23,9 @@ def book():
     return render_template('book.html', data= book)
 
 
-@app.route("/addbook")
-def add_book():
-    return render_template("add_book_form.html")
-
-
-@app.route("/addbookin_db", methods=['POST'])
-def add_book_in_db():
-    book = request.form.get('bookname')
-    price = request.form.get('price')
-    picture = request.form.get('picture')
-    print(f"{book},{price},{picture}")
-    add_book_to_data(book=book, price=price, picture=picture)
-    return redirect('/?massage=book added')
+@app.route('/admin-login')
+def admin_login():
+    return render_template('admin_login_form.html')
 
 
 @app.route('/search')
