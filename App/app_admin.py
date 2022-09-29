@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, Blueprint
-from Data.data import add_book_to_data, del_book, get_data_from_db
+from App.Data.upload_file import upload_file
+from App.Data.data import add_book_to_data, del_book, get_data_from_db
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -34,9 +35,10 @@ def add_book():
 def add_book_in_db():
     book = request.form.get('bookname')
     price = request.form.get('price')
-    picture = request.form.get('picture')
+    picture = request.files.get('picture')
+    upload_file()
     print(f"{book},{price},{picture}")
-    add_book_to_data(book=book, price=price, picture=picture)
+    add_book_to_data(book=book, price=price, picture=picture.filename)
     return redirect('/admin/home')
 
 
