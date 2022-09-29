@@ -12,14 +12,18 @@
              </svg>
 
              <h3 style="text-align:center;">Add a book</h3>
-             <form class="form-control form-control-lg"  action="/admin/add_a_book" method="post">
+             <form class="form-control form-control-lg"  action="/admin/add_a_book" method="post" enctype="multipart/form-data">
               <label for="Bookname">Book name:</label><br>
               <input type="text" id="Bookname" name="bookname"><br>
               <label for="Price">Price:</label><br>
               <input type="text" id="Price" name="price"><br>
-              <label for="Picture">Picture's link:</label><br>
-              <input type="text" id="Picture" name="picture"><br><br>
-              <input type="submit" value="Add">    
+              <label for="Picture">Picture:</label><br>
+              <input type=file name="picture"><br><br>
+              
+              <!-- <input type=submit value=Upload> -->
+              <!-- <input type="text" id="Picture" name="picture"><br><br> -->
+              
+              <input class="btn btn-success" type="submit" value="Add">    
           
           </form>
             <div class="card-body">
