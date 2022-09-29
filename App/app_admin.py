@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, Blueprint
-from App.Data.data import add_book_to_data, del_book, get_data_from_db
+from Data.data import add_book_to_data, del_book, get_data_from_db
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 

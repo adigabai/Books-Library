@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, request, redirect
-from App.Data.data import get_data_from_db, get_row, add_book_to_data, search_by_book_name
-from App.app_admin import bp
+from Data.data import get_data_from_db, get_row, add_book_to_data, search_by_book_name
+from app_admin import bp
 
 
 
@@ -36,5 +36,5 @@ def search_a_book():
 
 
 
-# app.run(debug= True)
+app.run(debug= True)
 
