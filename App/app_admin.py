@@ -2,11 +2,11 @@ from flask import Flask, render_template, request, redirect, Blueprint
 from App.Data.upload_file import upload_file
 from App.Data.data import add_book_to_data, del_book, get_data_from_db
 
-bp = Blueprint('admin', __name__, url_prefix='/admin')
+admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 # LOGIN
-@bp.route('/checklogin', methods=['POST'])
+@admin_bp.route('/checklogin', methods=['POST'])
 def admin_login():
     user_name = "Amit"
     password = "ADMiNLOGiN"
@@ -20,18 +20,18 @@ def admin_login():
         return "bad pass/user"
 
 
-@bp.route('/home')
+@admin_bp.route('/home')
 def home_admin():
     books = get_data_from_db()
     return render_template('home_admin.html', data= books)
 
 # add book
-@bp.route("/addbook")
+@admin_bp.route("/addbook")
 def add_book():
     return render_template("add_book_form.html")
 
 
-@bp.route('/add_a_book', methods=['POST'])
+@admin_bp.route('/add_a_book', methods=['POST'])
 def add_book_in_db():
     book = request.form.get('bookname')
     price = request.form.get('price')
@@ -43,7 +43,7 @@ def add_book_in_db():
 
 
 # delete book
-@bp.route('/delete_a_book')
+@admin_bp.route('/delete_a_book')
 def delete_book_from_db():
     rowid = request.args.get('id')
     del_book(rowid= rowid)
