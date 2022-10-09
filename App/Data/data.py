@@ -1,16 +1,23 @@
-
 import sqlite3
 
 books_DB_path = r'App/Data/Books_DB.db'
 # books_DB_path = r'App\Data\Books_DB.db'
 
+
+def connect_to_db():
+    # Connect
+    con = sqlite3.connect(books_DB_path)
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    return con,cur
+
+
 def get_data_from_db():
     # Connect
-    con = sqlite3.connect(books_DB_path)
-    cur = con.cursor()
+    con ,cur = connect_to_db()
     
     # get data
-    result = cur.execute('SELECT *,rowid from Books').fetchall()    
+    result = cur.execute('SELECT * from Books').fetchall()    
     
     # close
     con.close()
@@ -18,25 +25,21 @@ def get_data_from_db():
     return result
 
 
-def get_row(rowid):
+def get_row(id_pk):
     # Connect
-    con = sqlite3.connect(books_DB_path)
-    cur = con.cursor()
+    con ,cur = connect_to_db()
     
     # get data
-    result = []
-    result = cur.execute(f'SELECT * from Books WHERE rowid={rowid}').fetchall()
+    result = cur.execute(f'SELECT * from Books WHERE id={id_pk}').fetchone()
 
     # close
     con.close()
     return result
-
 
 
 def add_book_to_data(book, price, picture):
     # Connect
-    con = sqlite3.connect(books_DB_path)
-    cur = con.cursor()
+    con ,cur = connect_to_db()
     
     # add book
     cur.execute(f'INSERT INTO Books("Book", "Price", "Picture") VALUES("{book}","{price}","{picture}")')
@@ -46,12 +49,9 @@ def add_book_to_data(book, price, picture):
     con.close()
 
 
-
 def search_by_book_name(book_name):
-
     # Connect
-    con = sqlite3.connect(books_DB_path)
-    cur = con.cursor()
+    con ,cur = connect_to_db()
 
     # search by book name
     results = cur.execute(f"SELECT *,rowid FROM Books WHERE Book LIKE '{book_name}%'").fetchall()
@@ -63,16 +63,13 @@ def search_by_book_name(book_name):
     return results
 
 
-def del_book(rowid):
-    
+def del_book(id_pk):
     print("book DELETED")
-    
     # Connect
-    con = sqlite3.connect(books_DB_path)
-    cur = con.cursor()
+    con ,cur = connect_to_db()
      
     # delete a book
-    cur.execute(f'DELETE from Books WHERE rowid={rowid}')
+    cur.execute(f'DELETE from Books WHERE rowid="{id_pk}"')
     con.commit()
 
     # close
@@ -80,48 +77,14 @@ def del_book(rowid):
 
 
 
-
-
-
-
-#######################################################################################################
-
-# def insert_data_into_db(data):
-#     for d in data:
-#         cur.execute(f'INSERT INTO Books VALUES("{d[0]}", "{d[1]}", "{d[2]}")')
-#     con.commit()
-
-
-
-# def get_data():
-#     headers = {}
-#     data = []
-#     with open("C:\\Users\\Amit Hauzer\\Desktop\\VS_Projects\\John Bryce\\flask\\Flask_with_CSV_file\\Data\\books.csv", "r") as file:
-#         for header in file.readline()[:-1].split(','):
-#             headers[header] = []
-
-#         lines = file.readlines()
-#         for i in lines:
-#             i = i[:-1].split(',')
-            
-#             data.append(i)
-
-#     # convert_to_tuple(data)
+def get_user(username):
+    # Connect
+    con ,cur = connect_to_db()
     
-#     return data, headers
+    # get data
+    result = cur.execute(f'SELECT * from Users WHERE username="{username}"').fetchone()
 
-
-# # def convert_to_tuple(data):
-# #     for i,d in enumerate(data):
-# #         data[i] = tuple(d)
+    # close
+    con.close()
+    return result
     
-# #     return data
-
-
-# if __name__ == "__main__":
-#     con = sqlite3.connect(r'C:\Users\Amit Hauzer\Desktop\VS_Projects\John Bryce\flask\Flask_with_db\Data\Books_DB.db')
-#     cur = con.cursor()
-#     cur.execute('CREATE TABLE Books (Book Name, Price, Picture)')
-
-#     # data, header = get_data()
-#     # insert_data_into_db(data)

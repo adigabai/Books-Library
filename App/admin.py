@@ -1,23 +1,23 @@
 from flask import Flask, render_template, request, redirect, Blueprint
-from App.Data.upload_file import upload_file
+from App.upload_file import upload_file
 from App.Data.data import add_book_to_data, del_book, get_data_from_db
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 # LOGIN
-@admin_bp.route('/checklogin', methods=['POST'])
-def admin_login():
-    user_name = "Amit"
-    password = "ADMiNLOGiN"
+# @admin_bp.route('/checklogin', methods=['POST'])
+# def admin_login():
+#     user_name = "Amit"
+#     password = "ADMiNLOGiN"
     
-    u = request.form.get('username')
-    p = request.form.get('password')
+#     u = request.form.get('username')
+#     p = request.form.get('password')
 
-    if user_name == u and password == p:
-        return redirect('/admin/home')
-    else:
-        return "bad pass/user"
+#     if user_name == u and password == p:
+#         return redirect('/admin/home')
+#     else:
+#         return "bad pass/user"
 
 
 @admin_bp.route('/home')
@@ -46,5 +46,5 @@ def add_book_in_db():
 @admin_bp.route('/delete_a_book')
 def delete_book_from_db():
     rowid = request.args.get('id')
-    del_book(rowid= rowid)
+    del_book(id_pk= rowid)
     return redirect('/admin/home')
