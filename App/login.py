@@ -1,11 +1,8 @@
 
-
 import functools
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
-
-from werkzeug.security import check_password_hash, generate_password_hash
-
-from App.Data.data import connect_to_db, get_user
+from werkzeug.security import check_password_hash
+from App.Data.data import add_user_to_data, connect_to_db, get_user
 
 
 
@@ -22,7 +19,6 @@ def register():
         pet_name = request.form['pet_name']
         password = request.form['password']
 
-        con ,cur = connect_to_db()
         error = None
 
         if not username:
@@ -32,9 +28,7 @@ def register():
 
         if error is None:
             try:
-                cur.execute(f"INSERT INTO Users ('username', 'email', 'pet_name', 'password') VALUES ('{username}', '{eml}', '{pet_name}', '{generate_password_hash(password)}')")
-                con.commit()
-                con.close()
+                add_user_to_data(username=username, eml=eml, pet_name=pet_name, password=password)
                 flash('User has been added', category='message')
             except Exception as ex:
                 error = f"{ex}"

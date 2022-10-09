@@ -1,4 +1,5 @@
 import sqlite3
+from werkzeug.security import generate_password_hash
 
 books_DB_path = r'App/Data/Books_DB.db'
 # books_DB_path = r'App\Data\Books_DB.db'
@@ -87,4 +88,20 @@ def get_user(username):
     # close
     con.close()
     return result
+
+
+def add_user_to_data(username, eml, pet_name, password):
+    # Connect
+    con ,cur = connect_to_db()
     
+    # hash password
+    pass_hash = generate_password_hash(password)
+
+    # add book
+    cur.execute(
+        f"INSERT INTO Users ('username', 'email', 'pet_name', 'password') VALUES ('{username}', '{eml}', '{pet_name}', '{pass_hash}')"
+        )
+    con.commit()
+
+    # close
+    con.close()
