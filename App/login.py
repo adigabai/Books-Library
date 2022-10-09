@@ -1,5 +1,6 @@
 
 import functools
+from sqlite3 import IntegrityError
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
 from App.Data.data import add_user_to_data, connect_to_db, get_user
@@ -31,7 +32,10 @@ def register():
                 add_user_to_data(username=username, eml=eml, pet_name=pet_name, password=password)
                 flash('User has been added', category='message')
             except Exception as ex:
-                error = f"{ex}"
+                if IntegrityError:
+                    error = "Username already exists."
+                else:
+                    error = f"{ex}"
             else:
                 return redirect(url_for("login.login"))
 
