@@ -63,8 +63,15 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            flash('user connected', category='message')
-            return redirect(url_for('home.home'))
+            session['user_logged_in'] = True
+            if user['permissions'] == 'admin':
+                session['permissions'] = 'admin'
+                flash(f"Admin: {user['username']} is connected", category='message')
+                return redirect(url_for('admin.home_admin'))
+            else:
+                session['permissions'] = 'customer'
+                flash(f"{user['username']} is connected", category='message')
+                return redirect(url_for('home.home'))
 
         flash(error, category='error')
         
@@ -83,6 +90,7 @@ def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
+            flash(f"A login is required", category='error')
             return redirect(url_for('login.login'))
 
         return view(**kwargs)
@@ -94,6 +102,7 @@ def login_required(view):
 @login_bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
+    user_logged_in = session.get('user_logged_in')
     con ,cur = connect_to_db()
     if user_id is None:
         g.user = None

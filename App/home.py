@@ -13,6 +13,7 @@ def home():
 
 
 @home_bp.route("/book")
+@login_required
 def book():
     id_pk = request.args.get('id')
     book = get_row(id_pk = id_pk)
