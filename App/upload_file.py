@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for,render_template, send_from_directory, current_app
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = r'C:\Users\Amit Hauzer\Desktop\VS_Projects\John Bryce\git-repo\Books-Library\App\static\books_images'
+UPLOAD_FOLDER = r'.\App\static\books_images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
