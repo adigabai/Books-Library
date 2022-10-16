@@ -1,7 +1,7 @@
 from flask import flash, render_template, request, redirect, Blueprint, g, url_for
 from App.login import login_required
 from App.upload_file import upload_file
-from App.Data.data import add_book_to_data, del_book, get_data_from_db
+from App.Data.data import add_book_to_data, del_book, get_all_books_from_db
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -11,7 +11,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 @login_required
 def home_admin():
     if check_if_admin():
-        books = get_data_from_db()
+        books = get_all_books_from_db()
         return render_template('home_admin.html', data= books)
 
     else:

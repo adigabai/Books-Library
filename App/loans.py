@@ -1,7 +1,7 @@
 
 from flask import render_template, request, redirect, Blueprint, session
 from App.login import login_required
-from App.Data.data import get_row, add_loan_in_db
+from App.Data.data import get_a_book_from_db, add_loan_in_db
 from datetime import date
 
 loan_bp = Blueprint('loan', __name__, url_prefix='/loan')
@@ -13,7 +13,7 @@ loan_bp = Blueprint('loan', __name__, url_prefix='/loan')
 def loan_a_book():
     # the relevant book
     book_id = request.args.get('id')
-    book = get_row(id_pk = book_id)
+    book = get_a_book_from_db(id_pk = book_id)
     # ths relevant user
     user_id = session.get('user_id')
 

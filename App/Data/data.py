@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 books_DB_path = r'App/Data/Books_DB.db'
 # books_DB_path = r'App\Data\Books_DB.db'
 
-
+# General
 def connect_to_db():
     # Connect
     con = sqlite3.connect(books_DB_path)
@@ -12,8 +12,8 @@ def connect_to_db():
     cur = con.cursor()
     return con,cur
 
-
-def get_data_from_db():
+# Books
+def get_all_books_from_db():
     # Connect
     con ,cur = connect_to_db()
     # get data
@@ -23,7 +23,7 @@ def get_data_from_db():
     return result
 
 
-def get_row(id_pk):
+def get_a_book_from_db(id_pk):
     # Connect
     con ,cur = connect_to_db()
     # get data
@@ -47,7 +47,7 @@ def search_by_book_name(book_name):
     # Connect
     con ,cur = connect_to_db()
     # search by book name
-    results = cur.execute(f"SELECT *,rowid FROM Books WHERE Book LIKE '{book_name}%'").fetchall()
+    results = cur.execute(f"SELECT * FROM Books WHERE Book LIKE '{book_name}%'").fetchall()
     print(results)
     # close
     con.close()
@@ -59,13 +59,13 @@ def del_book(id_pk):
     # Connect
     con ,cur = connect_to_db()
     # delete a book
-    cur.execute(f'DELETE from Books WHERE rowid="{id_pk}"')
+    cur.execute(f'DELETE from Books WHERE id="{id_pk}"')
     con.commit()
     # close
     con.close()
 
 
-
+# Users
 def get_user(username):
     # Connect
     con ,cur = connect_to_db()
@@ -89,7 +89,7 @@ def add_user_to_data(username, eml, pet_name, password, permissions= 'customer')
     con.close()
 
 
-
+# Loans
 def add_loan_in_db(loan_date, return_date, book_id, user_id, returned=False):
     # Connect
     con ,cur = connect_to_db()

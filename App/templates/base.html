@@ -84,7 +84,7 @@
             {% else %}
                 <a href="{{ url_for('login.login') }}"><button type="button" class="btn btn-sm btn-outline-secondary" style="margin-bottom: 8px;">Login</button></a></br>
                 <a href="{{ url_for('login.register') }}"><button type="button" class="btn btn-sm btn-outline-secondary">Register</button></a>
-              {% endif %}
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -103,9 +103,7 @@
       </form> -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-<!--  -->
 
-<!--  -->
       </button>
     </div>
   </div>
@@ -120,11 +118,6 @@
     {% endif %}
   {% endfor %}
 
-  <!-- {% if request.args.get("message") %}
-  
-  <div class="alert alert-dark" role="alert">{{ request.args.get("message") }}</div>
-  
-  {% endif %} -->
 </header>
 
 

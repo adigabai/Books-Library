@@ -109,3 +109,4 @@ def load_logged_in_user():
     else:
 
         g.user = cur.execute(f"SELECT * FROM Users WHERE id='{user_id}'").fetchone()
+    con.close()
