@@ -88,6 +88,14 @@ def add_user_to_data(username, eml, pet_name, password, permissions= 'customer')
     # close
     con.close()
 
+def user_loans(user_id):
+    # Connect
+    con ,cur = connect_to_db()
+    # check loans
+    loans = cur.execute(f"SELECT * FROM Loans WHERE user_id= '{user_id}' AND returned='False'").fetchall()
+    # close
+    con.close()
+    return loans
 
 # Loans
 def add_loan_in_db(loan_date, return_date, book_id, user_id, returned=False):
@@ -95,6 +103,15 @@ def add_loan_in_db(loan_date, return_date, book_id, user_id, returned=False):
     con ,cur = connect_to_db()
     # add loan
     cur.execute(f'INSERT INTO Loans("loan_date", "return_date", "returned", "book_id", "user_id") VALUES("{loan_date}","{return_date}","{returned}","{book_id}","{user_id}")')
+    con.commit()
+    # close
+    con.close()
+
+def return_loan(book_id, user_id, return_date, returned=True):
+    # Connect
+    con ,cur = connect_to_db()
+    # add loan
+    cur.execute(f"UPDATE Loans SET return_date='{return_date}', returned='{returned}' WHERE book_id='{book_id}' AND user_id='{user_id}'")
     con.commit()
     # close
     con.close()
