@@ -32,7 +32,6 @@ def loan_a_book():
 
     return render_template('loan_form.html',data= book)
 
-
 @loan_bp.route('/returnbook')
 @login_required
 def return_a_loan():
