@@ -1,0 +1,20 @@
+TODO list:
+    admin:
+        all users
+        can change permissions
+
+    forgot password:
+        create page
+
+    Loans:
+        add loan details
+        change the return view
+        all Loans
+        book page with loan message
+        
+    search:
+        add loans books - DONE
+
+    user:
+        add settings
+        change password
