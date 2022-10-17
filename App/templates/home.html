@@ -6,9 +6,10 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-semibold">Books</h1>
                 <form class="d-flex" role="search" action="{{ url_for('home.search_a_book') }}">
-                    <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search">
                     <button class="btn btn-primary" type="submit">Search</button>
-                  </form>
+                </form>
                 <!-- <p class="lead text-muted">blabla</p> -->
                 <!-- <div>
                     <a href="#" class="btn btn-primary my-2">Main call to action</a>
@@ -17,28 +18,38 @@
             </div>
         </div>
     </section>
-    
-    
+
+
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                 {% for d in data %}
                 <div class="col">
-                    <div class="card shadow-sm" style="flex: auto;border-bottom-width: 0px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px; width: 240px;"> 
-                        
+                    <div class="card shadow-sm"
+                        style="flex: auto;border-bottom-width: 0px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px; width: 240px;">
+
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="0"
                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            
-                            <img src="..\static\books_images\{{ d.Picture }}" alt="" title="{{ d.Book }}" width="240px" height="330px"/>
+
+                            <img src="..\static\books_images\{{ d.Picture }}" alt="" title="{{ d.Book }}" width="240px"
+                                height="330px" />
                         </svg>
 
                         <div class="card-body">
                             <p class="card-text">{{ d.Book }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{{ url_for('home.book', id=d.id) }}" class="btn btn-sm btn-outline-secondary">View</a>
-                                    <a href="{{ url_for('loan.loan_a_book', id=d.id) }}" class="btn btn-sm btn-outline-primary">Loan</a>
+                                    <a href="{{ url_for('home.book', id=d.id) }}"
+                                        class="btn btn-sm btn-outline-secondary">View</a>
+                                    <!-- <a href="{{ url_for('loan.loan_a_book', id=d.id) }}"
+                                        class="btn btn-sm btn-outline-primary">Loan</a> -->
+                                    {% if d.id in loans %}
+                                        <a href="{{ url_for('loan.return_a_loan', id=d.id) }}" class="btn btn-sm btn-outline-primary">RETURN</a>
+                                        
+                                        {% else %}
+                                        <a href="{{ url_for('loan.loan_a_book', id=d.id) }}" class="btn btn-sm btn-outline-primary">Loan</a>    
+                                    {% endif %}
                                 </div>
                                 <small class="text-muted">{{ d.Price }} ILS</small>
                             </div>
@@ -48,10 +59,10 @@
                 {% endfor %}
             </div>
         </div>
-        
+
     </div>
     </div>
     </div>
-    
+
 </main>
 {% endblock %}
