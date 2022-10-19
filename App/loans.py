@@ -28,7 +28,8 @@ def loan_a_book():
         user_id = session.get('user_id')
         # add loan in DB
         add_loan_in_db(loan_date= loan_date, return_date= return_date, book_id= book_id, user_id= user_id, returned=False)
-        return f"you loaned {book['Book']}"
+        flash(f"You loaned the book {book['Book']}")
+        return redirect(url_for('home.home'))
 
     return render_template('loan_form.html',data= book)
 
@@ -49,8 +50,8 @@ def check_the_user_loans():
         user_id = session['user_id']
         all_user_loans = user_loans(user_id)
         for loan in all_user_loans:
-            books_id.append(int(loan['book_id']))
-        return books_id
+            books_id.append(loan['book_id'])
+        return books_id, all_user_loans
     else:
         flash('test: loans are empty or user is not login', category='message')
         return books_id

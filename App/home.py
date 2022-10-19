@@ -11,7 +11,7 @@ home_bp = Blueprint('home', __name__, url_prefix='/home')
 def home():
     books = get_all_books_from_db()
     loans_of_books = check_the_user_loans()
-    return render_template('home.html', data= books, loans=loans_of_books)
+    return render_template('home.html', data= books, loans= loans_of_books)
 
 
 @home_bp.route("/book")
@@ -27,6 +27,6 @@ def search_a_book():
     book_name = request.args.get('search')
     results = search_by_book_name(book_name= book_name)
     loans_of_books = check_the_user_loans()
-    return render_template('home.html', data= results, loans=loans_of_books)
+    return render_template('home.html', data= results, loans= loans_of_books)
 
 

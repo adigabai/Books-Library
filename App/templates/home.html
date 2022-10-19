@@ -37,18 +37,28 @@
                         </svg>
 
                         <div class="card-body">
-                            <p class="card-text">{{ d.Book }}</p>
+                            <p class="card-text">{{ d.Book }}
+                                {% if d.id in loans[0] %}
+                                    <span class="badge text-bg-success float-end">loaned</span><br>
+                                        {% for loan in loans[1] %}
+                                            {% if d.id == loan.book_id %}
+                                                <small class="text-muted">Until {{ loan.return_date }}</small>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <span><br> <br></span>
+                                {% endif %}
+                            </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{{ url_for('home.book', id=d.id) }}"
-                                        class="btn btn-sm btn-outline-secondary">View</a>
-                                    {% if d.id in loans %}
-                                        <a href="{{ url_for('loan.return_a_loan', id=d.id) }}" class="btn btn-sm btn-outline-primary">RETURN</a>
-                                        
-                                        {% else %}
+                                    <a href="{{ url_for('home.book', id=d.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                    {% if d.id in loans[0] %}
+                                        <a href="{{ url_for('loan.return_a_loan', id=d.id) }}" class="btn btn-sm btn-outline-secondary">RETURN</a>
+                                    {% else %}
                                         <a href="{{ url_for('loan.loan_a_book', id=d.id) }}" class="btn btn-sm btn-outline-primary">Loan</a>    
                                     {% endif %}
                                 </div>
+                                
                                 <small class="text-muted">{{ d.Price }} ILS</small>
                             </div>
                         </div>
