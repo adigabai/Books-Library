@@ -7,13 +7,14 @@ TODO list:
         create page
 
     Loans:
-        add loan details
-        change the return view
-        all Loans
+        add loan details                        - DONE
+        change the return view                  - DONE
+        if the date is passed, return the book
+        all Loans page                      
         book page with loan message
         
     search:
-        add loans books - DONE
+        add loans books                         - DONE
 
     user:
         add settings
