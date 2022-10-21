@@ -23,9 +23,9 @@
                 <form class="form-control form-control-lg" method="post">
                   
                   <label for="return_date">Return date:</label><br>
-                  <input type="date" id="return_date" name="return_date" required><br><br>
+                  <input type="date" id="return_date" name="return_date" min="{{ dates['today'] }}" max="{{ dates['two months'] }}" required><br><br>
                   <input type="submit" value="loan">
-
+                  
                 </form>
                 <div class="card-body">
 
