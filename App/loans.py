@@ -19,8 +19,7 @@ def loan_a_book():
     
     if request.method == 'POST':
         # return date
-        return_date = request.form.get('return_date').split('-')
-        return_date = date(int(return_date[0]), int(return_date[1]), int(return_date[2]))
+        return_date = convert_str_to_date(date_str= request.form.get('return_date'))
         # days for loan
         diff = return_date - today
         print(f"{return_date} - {today} = {diff.days}")
@@ -34,6 +33,8 @@ def loan_a_book():
     dates = {'today': today, 'two months': today + timedelta(days=60)}
     return render_template('loan_form.html',data= book, dates= dates)
 
+
+
 @loan_bp.route('/returnbook')
 @login_required
 def return_a_loan():
@@ -45,6 +46,7 @@ def return_a_loan():
     return redirect(url_for('home.home'))
 
 
+
 def check_the_user_loans():
     books_id= []
     if session:
@@ -52,13 +54,27 @@ def check_the_user_loans():
         all_user_loans = user_loans(user_id)
         for loan in all_user_loans:
             #TODO: add date checking and continue if it passes
+            if check_the_loan_date(loan= loan):
+                continue
             books_id.append(loan['book_id'])
         return books_id, all_user_loans
     else:
-        # flash('test: loans are empty or user is not login', category='message')
         return books_id
 
 
 
-# def check_the_loan_date():
+def check_the_loan_date(loan):
+    today = date.today()
+    return_date = convert_str_to_date(date_str= loan['return_date'])
+    if today >= return_date:
+        return_loan(book_id= loan['book_id'], user_id= loan['user_id'], return_date= today, returned=True)
+        return True
+    else:
+        return False
     
+
+
+def convert_str_to_date(date_str):
+    converter = date_str.split('-')
+    converter = date(int(converter[0]), int(converter[1]), int(converter[2]))
+    return converter

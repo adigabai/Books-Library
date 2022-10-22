@@ -1,8 +1,10 @@
 import os
-from flask import Flask, flash, request, redirect, url_for,render_template, send_from_directory, current_app
+from flask import flash, request
 from werkzeug.utils import secure_filename
+from colorama import Fore
 
-UPLOAD_FOLDER = r'.\App\static\books_images'
+# UPLOAD_FOLDER = r'.\App\static\books_images'
+UPLOAD_FOLDER = r'./App/static/books_images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
@@ -27,6 +29,24 @@ def upload_file():
             # return redirect(url_for('download_file', name=filename))
     else:
         print('its not POST method')
+
+
+def delete_file(book_picture):
+    file_path = UPLOAD_FOLDER+'/'+book_picture
+    try:
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            print("File has been deleted - Done.")
+        else:
+            print("File does not exist")
+    except Exception as ex:
+        print(f"{Fore.RED} {ex} {Fore.RESET}")
+
+
+
+
+
+
 
 
 # def check_a_file():
