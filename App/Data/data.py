@@ -12,25 +12,29 @@ def connect_to_db():
     cur = con.cursor()
     return con,cur
 
+
+
 # Books
 def get_all_books_from_db():
     # Connect
     con ,cur = connect_to_db()
-    # get data
+    # get all the books
     result = cur.execute('SELECT * from Books').fetchall()    
     # close
     con.close()
     return result
 
 
+
 def get_a_book_from_db(id_pk):
     # Connect
     con ,cur = connect_to_db()
-    # get data
+    # get a book 
     result = cur.execute(f'SELECT * from Books WHERE id={id_pk}').fetchone()
     # close
     con.close()
     return result
+
 
 
 def add_book_to_data(book, price, picture):
@@ -41,6 +45,7 @@ def add_book_to_data(book, price, picture):
     con.commit()
     # close
     con.close()
+
 
 
 def search_by_book_name(book_name):
@@ -54,8 +59,9 @@ def search_by_book_name(book_name):
     return results
 
 
+
 def del_book(id_pk):
-    print("book DELETED")
+    print("book has been deleted from db - Done.")
     # Connect
     con ,cur = connect_to_db()
     # delete a book
@@ -63,6 +69,7 @@ def del_book(id_pk):
     con.commit()
     # close
     con.close()
+
 
 
 # Users
@@ -76,17 +83,20 @@ def get_user(username):
     return result
 
 
+
 def add_user_to_data(username, eml, pet_name, password, permissions= 'customer'):
     # Connect
     con ,cur = connect_to_db()
     # hash password
     pass_hash = generate_password_hash(password)
-    # add book
+    # add user
     cur.execute(
         f"INSERT INTO Users ('username', 'email', 'pet_name', 'password', 'permissions') VALUES ('{username}', '{eml}', '{pet_name}', '{pass_hash}', '{permissions}')")
     con.commit()
     # close
     con.close()
+
+
 
 def user_loans(user_id):
     # Connect
@@ -96,6 +106,8 @@ def user_loans(user_id):
     # close
     con.close()
     return loans
+
+
 
 # Loans
 def add_loan_in_db(loan_date, return_date, book_id, user_id, returned=False):
@@ -107,11 +119,24 @@ def add_loan_in_db(loan_date, return_date, book_id, user_id, returned=False):
     # close
     con.close()
 
+
+
 def return_loan(book_id, user_id, return_date, returned=True):
     # Connect
     con ,cur = connect_to_db()
-    # add loan
+    # return loan
     cur.execute(f"UPDATE Loans SET return_date='{return_date}', returned='{returned}' WHERE book_id='{book_id}' AND user_id='{user_id}'")
+    con.commit()
+    # close
+    con.close()
+
+
+
+def return_loans_of_deleted_book(book_id, return_date, returned=True):
+    # Connect
+    con ,cur = connect_to_db()
+    # return all the loans of this book.
+    cur.execute(f"UPDATE Loans SET return_date='{return_date}', returned='{returned}' WHERE book_id='{book_id}' AND returned='False'")
     con.commit()
     # close
     con.close()

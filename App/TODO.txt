@@ -2,7 +2,7 @@ TODO list:
     admin:
         all users
         can change permissions
-        if you delete a book return the loans for all users 
+        if you delete a book return the loans for all users     - DONE
 
     forgot password:
         create a page
@@ -11,7 +11,7 @@ TODO list:
     Loans:
         add loan details                                        - DONE
         change the return view                                  - DONE
-        if the date is passed, return the book
+        if the date is passed, return the book                  - DONE
         add date range                                          - DONE
         all Loans page                      
         book page with loan message
@@ -24,4 +24,4 @@ TODO list:
         change password
 
     files:
-        if you delete a book, delete the file also. 
+        if you delete a book, delete the file also.             - DONE
